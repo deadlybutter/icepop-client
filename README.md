@@ -12,5 +12,6 @@ $ npm install icepop-client
 
 ```js
 import icepop from 'icepop-client';
-const client = new icepop('api', 'v1', '');
+const client = new icepop();
+// client.get...
 ```

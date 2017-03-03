@@ -10,7 +10,7 @@ class Client {
    * @param  {String} key       API key (Optional)
    * @return {Object}           API Client
    */
-  constructor(namespace = 'api', version = 'api', key = '') {
+  constructor(namespace = 'api', version = 'v1', key = '') {
     this.namespace = namespace;
     this.version = version;
     this.domain = `${namespace}/${version}/`;
@@ -31,8 +31,27 @@ class Client {
    * @return {Promise}           Promise containing the JSON response
    */
   get(type, identifier, value) {
-    console.log(`${this.domain}${type}/${identifier}/${value}`);
-    return fetch(`${this.domain}${type}/${identifier}/${value}`).then(this.responseHandler);
+    return fetch(`${this.domain}${type}/${identifier}/${value}`)
+      .then(this.responseHandler);
+  }
+
+  /**
+   * Query on an entity.
+   *
+   * @param  {String} type       Type of the entity
+   * @param  {Array}  params     Array containing key/value pairs of parameters to query with
+   *                                [
+   *                                  {
+   *                                    name: 'page',
+   *                                    value: 1,
+   *                                  },
+   *                                  ...
+   *                                ]
+   * @return {Promise}           Promise containing the JSON response
+   */
+  query(type, params) {
+    return fetch(`${this.domain}${type}?${params.join((param) => `${param.name}=${param.value}&`)}`)
+      .then(this.responseHandler);
   }
 }
 
