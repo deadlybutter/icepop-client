@@ -1,5 +1,3 @@
-import 'whatwg-fetch';
-
 class Client {
 
   /**
